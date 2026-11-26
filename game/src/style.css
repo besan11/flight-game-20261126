@@ -1,0 +1,156 @@
+/* SKYFERRY — cockpit glass and menus. Rajdhani Bold, vendored with
+   the game, so the HUD renders the same offline as it does here. */
+@font-face {
+  font-family: 'Rajdhani';
+  src: url('../fonts/rajdhani-bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html, body {
+  margin: 0;
+  height: 100%;
+  overflow: hidden;
+  background: #0a1420;
+  font-family: 'Rajdhani', 'Arial Narrow', sans-serif;
+  color: #e8f2fa;
+}
+
+#game {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  touch-action: none;
+}
+
+#status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+
+.panel {
+  background: rgba(8, 18, 30, 0.62);
+  border: 1px solid rgba(160, 210, 240, 0.35);
+  border-radius: 8px;
+  padding: 10px 12px;
+  backdrop-filter: blur(2px);
+}
+
+#mission-panel { position: absolute; top: 14px; left: 14px; min-width: 250px; max-width: 320px; }
+#hud-mission-name { font-size: 20px; letter-spacing: 1px; color: #ffd23e; }
+#hud-objectives { margin-top: 4px; font-size: 15px; line-height: 1.35; }
+#hud-objectives .obj.done { color: #7be495; }
+.mission-stats { margin-top: 6px; font-size: 16px; display: flex; gap: 18px; }
+.mission-stats b { color: #fff; }
+
+#heading-wrap { position: absolute; top: 14px; left: 50%; transform: translateX(-50%); text-align: center; }
+#hud-heading { border: 1px solid rgba(160, 210, 240, 0.35); border-radius: 6px; }
+#hud-warn { margin-top: 5px; font-size: 18px; letter-spacing: 2px; color: #ff5a4e; min-height: 22px; }
+#hud-warn.on { animation: blink 0.7s steps(2) infinite; }
+@keyframes blink { 50% { opacity: 0.25; } }
+
+#sys-panel { position: absolute; top: 14px; right: 14px; min-width: 210px; font-size: 15px; }
+.sys-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; }
+.sys-row span { color: #9fc4dd; min-width: 64px; }
+.sys-row b { margin-left: auto; }
+
+#attitude-wrap { position: absolute; left: 14px; bottom: 14px; text-align: center; }
+#hud-attitude { border: 1px solid rgba(160, 210, 240, 0.35); border-radius: 50%; background: rgba(8, 18, 30, 0.5); }
+.att-label { margin-top: 4px; font-size: 14px; color: #cfe5f2; }
+
+#power-panel { position: absolute; bottom: 14px; left: 50%; transform: translateX(-50%); width: 380px; }
+.power-row { display: flex; align-items: center; gap: 8px; margin: 3px 0; font-size: 15px; }
+.power-row span { color: #9fc4dd; min-width: 42px; }
+.power-row b { margin-left: auto; min-width: 42px; text-align: right; }
+.bar { flex: 1; height: 10px; background: rgba(255, 255, 255, 0.14); border-radius: 5px; overflow: hidden; }
+.bar-fill { height: 100%; border-radius: 5px; transition: width 0.15s linear; }
+.bar-fill.throttle { background: #ffb020; width: 12%; }
+.bar-fill.fuel { background: #37c978; width: 100%; }
+.bar-fill.integrity { background: #37c978; width: 100%; }
+#hud-message { margin-top: 7px; font-size: 15px; line-height: 1.3; color: #ffe9a8; min-height: 20px; }
+
+#speed-panel { position: absolute; right: 14px; bottom: 14px; text-align: right; min-width: 170px; }
+.big-read { display: flex; align-items: baseline; justify-content: flex-end; gap: 6px; }
+.big-num { font-size: 44px; line-height: 1; color: #fff; }
+.big-unit { font-size: 15px; color: #9fc4dd; }
+.small-reads { margin-top: 4px; font-size: 15px; display: flex; gap: 14px; justify-content: flex-end; }
+.small-reads b { color: #ffd23e; }
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(4, 10, 18, 0.55);
+  pointer-events: auto;
+}
+.overlay.hidden { display: none; }
+.overlay-card {
+  width: min(680px, 92vw);
+  max-height: 92vh;
+  overflow-y: auto;
+  background: rgba(8, 18, 30, 0.88);
+  border: 1px solid rgba(160, 210, 240, 0.4);
+  border-radius: 14px;
+  padding: 26px 30px;
+  text-align: center;
+}
+.overlay-card.small { width: min(480px, 92vw); }
+.overlay-card h1 {
+  margin: 0;
+  font-size: 64px;
+  letter-spacing: 10px;
+  color: #ffd23e;
+  line-height: 1;
+}
+.overlay-card h2 { margin: 0 0 10px; font-size: 34px; letter-spacing: 4px; color: #ffd23e; }
+.tagline { font-size: 18px; line-height: 1.45; color: #cfe5f2; margin: 12px 0 18px; }
+#title-missions { display: grid; gap: 8px; margin-bottom: 16px; }
+.mission-btn {
+  display: grid;
+  grid-template-columns: 34px 1fr auto;
+  gap: 4px 12px;
+  align-items: center;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(160, 210, 240, 0.3);
+  border-radius: 8px;
+  padding: 9px 12px;
+  color: #e8f2fa;
+  font-family: inherit;
+  cursor: pointer;
+}
+.mission-btn:hover { background: rgba(255, 210, 62, 0.16); border-color: #ffd23e; }
+.mission-num {
+  grid-row: span 2;
+  font-size: 26px;
+  color: #ffd23e;
+  text-align: center;
+}
+.mission-name { font-size: 19px; letter-spacing: 1px; }
+.mission-tag { font-size: 14px; color: #9fc4dd; }
+.mission-points { grid-row: span 2; font-size: 15px; color: #7be495; }
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px 16px;
+  text-align: left;
+  font-size: 15px;
+  color: #cfe5f2;
+  margin-bottom: 12px;
+}
+.controls b { color: #fff; }
+.fine { font-size: 14px; color: #8fb4cc; }
+#end-lines { font-size: 18px; line-height: 1.5; margin: 8px 0 14px; }
+#end-lines div { margin: 4px 0; }

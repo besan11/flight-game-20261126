@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SKYFERRY — a courier pilot's six sorties</title>
+<link rel="stylesheet" href="./src/style.css">
+<script type="importmap">
+{ "imports": { "three": "./vendor/three.module.min.js" } }
+</script>
+</head>
+<body>
+<canvas id="game" aria-label="SKYFERRY flight game: fly the Kite-9 courier plane through six missions over the islands"></canvas>
+<p id="status" role="status" aria-live="polite"></p>
+
+<div id="hud" aria-hidden="true">
+  <div class="panel" id="mission-panel">
+    <div id="hud-mission-name">1 · RING RUN</div>
+    <div id="hud-objectives"></div>
+    <div class="mission-stats"><span>⏱ <b id="hud-timer">04:00</b></span><span>SCORE <b id="hud-score">0</b></span></div>
+  </div>
+
+  <div id="heading-wrap">
+    <canvas id="hud-heading" width="300" height="34"></canvas>
+    <div id="hud-warn"></div>
+  </div>
+
+  <div class="panel" id="sys-panel">
+    <div class="sys-row"><span>WIND</span><b id="hud-wind">—</b></div>
+    <div class="sys-row"><span>AIRFRAME</span><div class="bar"><div class="bar-fill integrity" id="hud-integrity-fill"></div></div><b id="hud-integrity-text">100%</b></div>
+    <div class="sys-row"><span>G</span><b id="hud-g">1.0 G</b></div>
+  </div>
+
+  <div id="attitude-wrap">
+    <canvas id="hud-attitude" width="150" height="150"></canvas>
+    <div class="att-label">VSI <b id="hud-vsi">+0.0</b> ft/min ×100</div>
+  </div>
+
+  <div id="power-panel" class="panel">
+    <div class="power-row"><span>THR</span><div class="bar"><div class="bar-fill throttle" id="hud-throttle-fill"></div></div><b id="hud-throttle-text">12%</b></div>
+    <div class="power-row"><span>FUEL</span><div class="bar"><div class="bar-fill fuel" id="hud-fuel-fill"></div></div><b id="hud-fuel-text">100%</b></div>
+    <div id="hud-message">Pick a sortie.</div>
+  </div>
+
+  <div id="speed-panel" class="panel">
+    <div class="big-read"><span class="big-num" id="hud-airspeed">0</span><span class="big-unit">KT</span></div>
+    <div class="big-read"><span class="big-num" id="hud-altitude">0</span><span class="big-unit">FT</span></div>
+    <div class="small-reads"><span>FLAPS <b id="hud-flaps">UP</b></span><span>GEAR <b id="hud-gear">DOWN</b></span></div>
+  </div>
+</div>
+
+<div id="overlay-title" class="overlay">
+  <div class="overlay-card">
+    <h1>SKYFERRY</h1>
+    <p class="tagline">Six sorties for the Kite-9 courier over the islands. Fly the rings, drop the crates, mind the fuel — and bring her home.</p>
+    <div id="title-missions"></div>
+    <div class="controls">
+      <div><b>↑ / ↓ or W / S</b> pitch</div>
+      <div><b>← / → or A / D</b> bank &amp; turn</div>
+      <div><b>Shift / Ctrl</b> throttle up / down</div>
+      <div><b>Space</b> drop crate</div>
+      <div><b>G</b> flaps &nbsp; <b>L</b> gear &nbsp; <b>B</b> brake</div>
+      <div><b>P</b> pause &nbsp; <b>T</b> restart sortie</div>
+    </div>
+    <p class="fine">Runs fully offline in a desktop browser. No network, no account, no downloads — just you and the islands.</p>
+  </div>
+</div>
+
+<div id="overlay-pause" class="overlay hidden">
+  <div class="overlay-card small">
+    <h2>PAUSED</h2>
+    <p>Press P to keep flying, or T to restart this sortie.</p>
+  </div>
+</div>
+
+<div id="overlay-end" class="overlay hidden">
+  <div class="overlay-card small">
+    <h2 id="end-title">SORTIE COMPLETE</h2>
+    <div id="end-lines"></div>
+    <p id="end-hint" class="fine">Press T to fly again</p>
+  </div>
+</div>
+
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
